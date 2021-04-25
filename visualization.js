@@ -1,19 +1,3 @@
-function transaction(wealthA, wealthB, fairness, fracTransacted) {
-    const a_pays = Math.random() < 0.5
-
-    let payment_amount = Math.min(wealthA, wealthB) * fracTransacted
-
-    if ((wealthA < wealthB) === a_pays)
-        payment_amount *= fairness
-
-    wealthA -= payment_amount * (a_pays ? 1 : -1)
-    wealthB -= payment_amount * (a_pays ? -1 : 1)
-
-    console.log('Wealth A: ' + wealthA)
-    console.log('Wealth B: ' + wealthB)
-}
-
-
 function draw_transaction_simulator() {
     const container = d3.select('#transaction-simulator')
     const width = container.node().getBoundingClientRect()['width']
@@ -26,6 +10,11 @@ function draw_transaction_simulator() {
 
     let individuals = [{'name': 'A', 'size': 150, 'x': 200, 'y': 300},
         {'name': 'B', 'size': 150, 'x': 600, 'y': 300}]
+
+    function update_sliders(duration) {
+        container.selectAll('input').data(individuals).join('input').transition().duration(duration)
+            .attr('value', (d) => d.size)
+    }
 
     function draw_squares(duration = 0, delay = 0) {
         let rect = svg.selectAll('rect').data(individuals).join('rect')  // Creates the rectangle for each object
@@ -41,43 +30,66 @@ function draw_transaction_simulator() {
         const start_box = individuals[(size < 0) ? 1 : 0]
         const end_box = individuals[(size < 0) ? 0 : 1]
 
+        console.log('Hello')
+        console.log(start_box)
+        console.log(end_box)
+
         const abs_size = Math.abs(size)
-        let box = svg.append('circle').attr('r', abs_size / 2)
+        let transfer = svg.append('circle').attr('r', abs_size / 2)
             .attr('cx', start_box.x).attr('cy', start_box.y)
             .attr('fill', 'black')
 
-        box.transition().duration(2000)
+        transfer.transition().duration(2000)
             .attr('cx', end_box.x)
             .attr('cy', end_box.y)
 
         individuals[(size < 0) ? 1 : 0].size -= abs_size
         individuals[(size < 0) ? 0 : 1].size += abs_size
-        draw_squares(500, 1100)
 
-        box.transition().delay(2000).remove()
+        draw_squares(500, 1100)
+        transfer.transition().delay(2000).remove()
+
+        update_sliders(1000)
+    }
+
+    function transaction(event, fairness =0.1, fracTransacted = 0.3) {
+        const wealthA = individuals[0].size
+        const wealthB = individuals[1].size
+
+
+        const a_pays = Math.random() < 0.5
+
+
+        let payment_amount = Math.min(wealthA, wealthB) * fracTransacted;
+
+        if ((wealthA < wealthB) === a_pays)
+            payment_amount *= fairness
+
+
+        draw_transfer(Math.round(payment_amount * (a_pays ? 1 : -1)))
     }
 
 
-    // <input type="range" name="mySlider" id=mySlider min="10" max="100" value="50">
     draw_squares(0);
-    draw_transfer(50)
 
 
-    container.selectAll('input').data(individuals).enter().append('input') // Creates a new input object for each individual
-        .attr('type', 'range').attr('min', 0).attr('max', 300).attr('value', 150).attr('step', 5).attr('id', (d) => d.name)
+    // Add the individual sliders
+
+
+    container.selectAll('input').data(individuals).join('input') // Creates a new input object for each individual
+        .attr('type', 'range').attr('min', 0).attr('max', 300).attr('value', (d) => d.size).attr('id', (d) => d.name)
         .on('change', function (d) {
-            const selectedValue = this.value
+            const selectedValue = parseInt(this.value)
             const name = this.id
             individuals.forEach(function (individual, index) {
                 if (individual.name === name) individuals[index].size = selectedValue;
             });
 
-            console.log(individuals);
-            // console.log(data);
-            // console.log(individuals)
-            // console.log('Selected Value: ' + selectedValue)
+            update_sliders(0);
             draw_squares(1000);
         })
+
+    container.append('button').text('Transact').on('click', transaction)
 
 
 }
