@@ -8,16 +8,13 @@ function draw_transaction_simulator() {
         .style("width", width)
         .style("height", svg_height);
 
-    let individuals = [{'name': 'A', 'size': 150, 'x': 200, 'y': 300},
-        {'name': 'B', 'size': 150, 'x': 600, 'y': 300}]
+    let individuals = [{'name': 'A', 'size': 150, 'x': 200, 'y': 350},
+        {'name': 'B', 'size': 150, 'x': 600, 'y': 350}]
 
-    function update_sliders(duration) {
-        container.selectAll('input').data(individuals).join('input').transition().duration(duration)
-            .attr('value', (d) => d.size)
-    }
 
     function draw_squares(duration = 0, delay = 0) {
-        let rect = svg.selectAll('rect').data(individuals).join('rect')  // Creates the rectangle for each object
+        svg.selectAll('rect#individual').data(individuals).join('rect')  // Creates the rectangle for each object
+            .attr('id', 'individual')
             .transition().delay(delay).duration(duration)
             .attr('width', (d) => d.size)
             .attr('height', (d) => d.size)
@@ -35,13 +32,13 @@ function draw_transaction_simulator() {
         console.log(end_box)
 
         const abs_size = Math.abs(size)
-        let transfer = svg.append('circle').attr('r', abs_size / 2)
-            .attr('cx', start_box.x).attr('cy', start_box.y)
+        let transfer = svg.append('rect').attr('width', abs_size).attr('height', abs_size)
+            .attr('x', start_box.x - abs_size / 2).attr('y', start_box.y - abs_size / 2)
             .attr('fill', 'black')
 
         transfer.transition().duration(2000)
-            .attr('cx', end_box.x)
-            .attr('cy', end_box.y)
+            .attr('x', end_box.x - abs_size/2)
+            .attr('y', end_box.y - abs_size/2)
 
         individuals[(size < 0) ? 1 : 0].size -= abs_size
         individuals[(size < 0) ? 0 : 1].size += abs_size
@@ -52,7 +49,73 @@ function draw_transaction_simulator() {
         update_sliders(1000)
     }
 
-    function transaction(event, fairness =0.1, fracTransacted = 0.3) {
+
+    draw_squares(0);
+
+
+    var sliderAHousing = svg.append('g').attr('id', 'sliderAHousing')
+        .attr('transform', `translate(${individuals[0].x - 150},${individuals[0].y + individuals[0].size / 2 + 50})`);
+
+
+    var sliderA = d3.sliderBottom().min(1).max(300).ticks(5).default(150.0).width(300)
+        .on('onchange', (val) => {
+            individuals[0].size = val
+            update_sliders(1000)
+            draw_squares(1000)
+        });
+
+    sliderAHousing.call(sliderA)
+
+    var sliderBHousing = svg.append('g').attr('id', 'sliderBHousing')
+        .attr('transform', `translate(${individuals[1].x - 150},${individuals[1].y + individuals[1].size / 2 + 50})`);
+
+    var sliderB = d3.sliderBottom().min(1).max(300).ticks(5).default(150.0).width(300)
+        .on('onchange', (val) => {
+            individuals[1].size = val
+            update_sliders(1000)
+            draw_squares(1000)
+        });
+
+    sliderBHousing.call(sliderB)
+
+
+    function update_sliders(duration) {
+        sliderA.value(individuals[0].size)
+        sliderB.value(individuals[1].size)
+        sliderAHousing.transition().duration(duration).attr('transform', `translate(${individuals[0].x - 150},${individuals[0].y + individuals[0].size / 2 + 50})`);
+        sliderBHousing.transition().duration(duration).attr('transform', `translate(${individuals[1].x - 150},${individuals[1].y + individuals[1].size / 2 + 50})`);
+    }
+
+
+    var fairness = 0.5;
+
+    var fairnessSlider = d3.sliderBottom().min(0.05).max(0.95).ticks(5).default(0.5).displayValue(false).width(200)
+        .on('onchange', (val) => {
+            fairness = val
+        })
+    svg.append('g').attr('id', 'fairnessSliderHousing')
+        .attr('transform', 'translate(175, 35)')
+        .call(fairnessSlider)
+    svg.append('text')
+        .attr('x', 65)
+        .attr('y', 40)
+        .text('Fairness')
+
+    var fracTransacted = 0.3;
+    var transactSlider = d3.sliderBottom().min(0.05).max(0.95).ticks(5).default(0.5).displayValue(false).width(200)
+        .on('onchange', (val) => {
+            fracTransacted = val
+        })
+    svg.append('g').attr('id', 'fairnessSliderHousing')
+        .attr('transform', 'translate(175, 100)')
+        .call(transactSlider)
+    svg.append('text')
+        .attr('x', 0)
+        .attr('y', 105)
+        .text('Frac Transacted')
+
+
+    function transaction(event) {
         const wealthA = individuals[0].size
         const wealthB = individuals[1].size
 
@@ -62,36 +125,22 @@ function draw_transaction_simulator() {
 
         let payment_amount = Math.min(wealthA, wealthB) * fracTransacted;
 
+        console.log(fairness)
         if ((wealthA < wealthB) === a_pays)
-            payment_amount *= fairness
+            payment_amount *= (1 - fairness)
 
 
         draw_transfer(Math.round(payment_amount * (a_pays ? 1 : -1)))
     }
 
 
-    draw_squares(0);
+    let button = svg.append('rect').attr('height', 75).attr('width', 300).attr('fill', 'grey')
+        .attr('x', 450).attr('y', 30).on('click', transaction)
 
+    button.on('mouseover', () => {button.attr('fill', 'black')})
+    button.on('mouseout', () => {button.attr('fill', 'grey')})
 
-    // Add the individual sliders
-
-
-    container.selectAll('input').data(individuals).join('input') // Creates a new input object for each individual
-        .attr('type', 'range').attr('min', 0).attr('max', 300).attr('value', (d) => d.size).attr('id', (d) => d.name)
-        .on('change', function (d) {
-            const selectedValue = parseInt(this.value)
-            const name = this.id
-            individuals.forEach(function (individual, index) {
-                if (individual.name === name) individuals[index].size = selectedValue;
-            });
-
-            update_sliders(0);
-            draw_squares(1000);
-        })
-
-    container.append('button').text('Transact').on('click', transaction)
-
-
+    svg.append('text').attr('x', 495).attr('y', 75).text('Click to Run Transaction').attr('fill', 'white').style('pointer-events', 'none')
 }
 
 

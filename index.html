@@ -1,9 +1,25 @@
 <!doctype html>
-<meta charset="utf-8">
-<script src="https://d3js.org/d3.v6.js"></script>
-<script src="https://d3js.org/d3.v6.js"></script>
 
-<script src="https://distill.pub/template.v1.js"></script>
+<head>
+    <meta charset="utf-8">
+    <script src="https://d3js.org/d3.v6.js"></script>
+    <script src="https://unpkg.com/d3-simple-slider"></script>
+    <script src="https://distill.pub/template.v1.js"></script>
+    <style>
+        svg text {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        svg text::selection {
+            background: none;
+        }
+
+    </style>
+</head>
+
 <script type="text/front-matter">
   title: "Wealth Inequality in America"
   description: "In this paper, we are using a simple model to simulate the effect of various policies on wealth inequality."
@@ -13,6 +29,14 @@
   affiliations:
   - Massachussets Institute of Technology: https://mit.edu
   - Massachussets Institute of Technology: https://mit.edu
+
+
+
+
+
+
+
+
 
 
 </script>
@@ -25,7 +49,9 @@
     <p>This is the first paragraph of the article.</p>
     <figure class="l-middle">
         <div id="transaction-simulator" style="width: 100%"></div>
-        <figcaption><center>This is the figure caption</center></figcaption>
+        <figcaption>
+            <center>Transaction Simulator</center>
+        </figcaption>
     </figure>
     <p>This is the second paragraph of the article.</p>
 
