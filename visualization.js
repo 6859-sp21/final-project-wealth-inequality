@@ -37,8 +37,8 @@ function draw_transaction_simulator() {
             .attr('fill', 'black')
 
         transfer.transition().duration(2000)
-            .attr('x', end_box.x - abs_size/2)
-            .attr('y', end_box.y - abs_size/2)
+            .attr('x', end_box.x - abs_size / 2)
+            .attr('y', end_box.y - abs_size / 2)
 
         individuals[(size < 0) ? 1 : 0].size -= abs_size
         individuals[(size < 0) ? 0 : 1].size += abs_size
@@ -102,7 +102,7 @@ function draw_transaction_simulator() {
         .text('Fairness')
 
     var fracTransacted = 0.3;
-    var transactSlider = d3.sliderBottom().min(0.05).max(0.95).ticks(5).default(0.5).displayValue(false).width(200)
+    var transactSlider = d3.sliderBottom().min(0.05).max(0.5).ticks(5).default(0.5).displayValue(false).width(200)
         .on('onchange', (val) => {
             fracTransacted = val
         })
@@ -137,8 +137,12 @@ function draw_transaction_simulator() {
     let button = svg.append('rect').attr('height', 75).attr('width', 300).attr('fill', 'grey')
         .attr('x', 450).attr('y', 30).on('click', transaction)
 
-    button.on('mouseover', () => {button.attr('fill', 'black')})
-    button.on('mouseout', () => {button.attr('fill', 'grey')})
+    button.on('mouseover', () => {
+        button.attr('fill', 'black')
+    })
+    button.on('mouseout', () => {
+        button.attr('fill', 'grey')
+    })
 
     svg.append('text').attr('x', 495).attr('y', 75).text('Click to Run Transaction').attr('fill', 'white').style('pointer-events', 'none')
 }
@@ -147,3 +151,12 @@ function draw_transaction_simulator() {
 draw_transaction_simulator();
 
 // transaction(100, 100, 0.1, 0.5)
+
+document.addEventListener('mousedown', function (event) {
+    if (event.detail > 1) {
+        event.preventDefault();
+        // of course, you still do not know what you prevent here...
+        // You could also check event.ctrlKey/event.shiftKey/event.altKey
+        // to not prevent something useful.
+    }
+}, false);
