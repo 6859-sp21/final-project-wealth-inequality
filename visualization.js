@@ -87,9 +87,9 @@ function draw_transaction_simulator() {
     }
 
 
-    var fairness = 0.5;
+    var fairness = 0.95;
 
-    var fairnessSlider = d3.sliderBottom().min(0.05).max(0.95).ticks(5).default(0.5).displayValue(false).width(200)
+    var fairnessSlider = d3.sliderBottom().min(0.0).max(0.3).ticks(5).default(fairness).displayValue(false).width(200)
         .on('onchange', (val) => {
             fairness = val
         })
@@ -147,10 +147,205 @@ function draw_transaction_simulator() {
     svg.append('text').attr('x', 495).attr('y', 75).text('Click to Run Transaction').attr('fill', 'white').style('pointer-events', 'none')
 }
 
-
 draw_transaction_simulator();
 
-// transaction(100, 100, 0.1, 0.5)
+
+function draw_economy_simulator() {
+    const container = d3.select('#economy-simulator')
+    const margin = {left: 30, right: 10, top: 10, bottom: 50}
+    const width = container.node().getBoundingClientRect()['width'] - margin.left - margin.right
+    const height = 0.75 * width
+
+    const svg = container.append('svg')
+        .style("width", width + margin.left + margin.right)
+        .style("height", height + margin.top + margin.bottom)
+
+    // draw axes (initial)
+    var x = d3.scaleLinear().domain([0, 100]).range([margin.left, width - margin.right])
+    var y = d3.scaleLinear().domain([0, 8]).range([height - margin.bottom, margin.top])
+    svg.append('g').attr('transform', `translate(0,${height - margin.bottom})`).attr('class', 'x-axis')
+    svg.append('g').attr('transform', `translate(${margin.left},0)`).attr('class', 'y-axis')
+
+
+    const iter_label = svg.append('text').attr('x', width - 300).attr('y', 15).attr('class', 'iter')
+
+    function plot_histogram(data, duration = 1000) {
+        bins = d3.bin().thresholds(25)(data)
+
+        // Change Scale
+        x.domain([bins[0].x0, bins[bins.length - 1].x1])
+        y.domain([0, d3.max(bins, d => d.length)])
+
+        // Update Axes
+        svg.select(".x-axis")
+            .transition()
+            .duration(duration)
+            .call(d3.axisBottom(x).ticks(width / 80))
+        svg.select(".y-axis")
+            .transition()
+            .duration(duration)
+            .call(d3.axisLeft(y).ticks(height / 40))
+
+
+        svg
+            .selectAll('rect')
+            .data(bins)
+            .join('rect')
+            .transition()
+            .duration(duration)
+            .attr("x", d => x(d.x0) + 1)
+            .attr("width", d => Math.max(0, x(d.x1) - x(d.x0) - 1))
+            .attr("y", d => y(d.length))
+            .attr("height", d => y(0) - y(d.length))
+            .attr('fill', 'blue');
+
+    }
+
+    async function simulate_economy(num_iter) {
+        const fairness = 0.05
+        const fracTransacted = 0.3
+
+        let i;
+
+        for (i = 1; i < num_iter + 1; i++) {
+
+            const indices = getRandom(data, 2) // Select two random participants
+            const wealthA = data[indices[0]]
+            const wealthB = data[indices[1]]
+            const a_pays = Math.random() < 0.5
+            let payment_amount = Math.min(wealthA, wealthB) * fracTransacted;
+            if ((wealthA < wealthB) === a_pays)
+                payment_amount *= (1 - fairness)
+            data[indices[0]] += (a_pays ? -1 : 1) * payment_amount
+            data[indices[1]] -= (a_pays ? -1 : 1) * payment_amount
+
+
+            if (i % 100 === 0) {
+                plot_histogram(data, 500)
+                iter_label.transition().duration(500).text(`Iteration #${i}`).attr('font', 'Helvetica')
+                await sleep(500)
+            }
+            console.log('hello')
+        }
+    }
+
+    data = Array(1000).fill(300);
+    plot_histogram(data, 0)
+    simulate_economy(10000)
+}
+
+function getRandom(arr, n) {
+    var result = new Array(n),
+        len = arr.length,
+        taken = new Array(len);
+    if (n > len)
+        throw new RangeError("getRandom: more elements taken than available");
+    while (n--) {
+        var x = Math.floor(Math.random() * len);
+        result[n] = x in taken ? taken[x] : x;
+        taken[x] = --len in taken ? taken[len] : len;
+    }
+    return result;
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+draw_economy_simulator();
+
+
+function draw_wealth_tax_economy_simulator() {
+    const container = d3.select('#wealth-tax-economy-simulator')
+    const margin = {left: 30, right: 10, top: 10, bottom: 50}
+    const width = container.node().getBoundingClientRect()['width'] - margin.left - margin.right
+    const height = 0.75 * width
+
+    const svg = container.append('svg')
+        .style("width", width + margin.left + margin.right)
+        .style("height", height + margin.top + margin.bottom)
+
+    // draw axes (initial)
+    var x = d3.scaleLinear().domain([0, 100]).range([margin.left, width - margin.right])
+    var y = d3.scaleLinear().domain([0, 8]).range([height - margin.bottom, margin.top])
+    svg.append('g').attr('transform', `translate(0,${height - margin.bottom})`).attr('class', 'x-axis')
+    svg.append('g').attr('transform', `translate(${margin.left},0)`).attr('class', 'y-axis')
+
+
+    const iter_label = svg.append('text').attr('x', width - 300).attr('y', 15).attr('class', 'iter')
+
+    function plot_histogram(tax_data, duration = 1000) {
+        bins = d3.bin().thresholds(25)(tax_data)
+
+        // Change Scale
+        x.domain([bins[0].x0, bins[bins.length - 1].x1])
+        y.domain([0, d3.max(bins, d => d.length)])
+
+        // Update Axes
+        svg.select(".x-axis")
+            .transition()
+            .duration(duration)
+            .call(d3.axisBottom(x).ticks(width / 80))
+        svg.select(".y-axis")
+            .transition()
+            .duration(duration)
+            .call(d3.axisLeft(y).ticks(height / 40))
+
+
+        svg
+            .selectAll('rect')
+            .data(bins)
+            .join('rect')
+            .transition()
+            .duration(duration)
+            .attr("x", d => x(d.x0) + 1)
+            .attr("width", d => Math.max(0, x(d.x1) - x(d.x0) - 1))
+            .attr("y", d => y(d.length))
+            .attr("height", d => y(0) - y(d.length))
+            .attr('fill', 'blue');
+
+    }
+
+    async function simulate_tax_economy(num_iter) {
+        const fairness = 0.05
+        const fracTransacted = 0.3
+        const wealthTax = 0.25
+        let i;
+
+        for (i = 1; i < num_iter + 1; i++) {
+            tax_data = tax_data.filter((d) => d > 0)
+            const indices = getRandom(tax_data, 2) // Select two random participants
+            const wealthA = tax_data[indices[0]]
+            const wealthB = tax_data[indices[1]]
+            const a_pays = Math.random() < 0.5
+            let payment_amount = Math.min(wealthA, wealthB) * fracTransacted;
+            if ((wealthA < wealthB) === a_pays)
+                payment_amount *= (1 - fairness)
+
+            if (a_pays)
+                payment_amount += wealthTax * (wealthA - d3.mean(tax_data))
+            else
+                payment_amount += wealthTax * (wealthB - d3.mean(tax_data))
+
+            tax_data[indices[0]] += (a_pays ? -1 : 1) * payment_amount
+            tax_data[indices[1]] -= (a_pays ? -1 : 1) * payment_amount
+
+
+            if (i % 100 === 0) {
+                plot_histogram(tax_data, 500)
+                iter_label.transition().duration(500).text(`New Iteration #${i}`).attr('font', 'Helvetica')
+                await sleep(500)
+            }
+        }
+    }
+
+    tax_data = Array(1000).fill(300);
+    plot_histogram(tax_data, 0)
+    simulate_tax_economy(10000)
+}
+
+draw_wealth_tax_economy_simulator()
 
 document.addEventListener('mousedown', function (event) {
     if (event.detail > 1) {
