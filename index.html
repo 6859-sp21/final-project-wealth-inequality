@@ -5,6 +5,8 @@
     <script src="https://d3js.org/d3.v6.js"></script>
     <script src="https://unpkg.com/d3-simple-slider"></script>
     <script src="template.v1.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         /*svg text {*/
         /*    -webkit-user-select: none;*/
@@ -29,40 +31,63 @@
   affiliations:
   - Massachussets Institute of Technology: https://mit.edu
   - Massachussets Institute of Technology: https://mit.edu
-
-
-
-
-
-
-
-
-
-
-
 </script>
 
 <dt-article>
     <h1>Wealth Inequality</h1>
     <h2>An interactive simulation based approach to policies for wealth inequality.</h2>
     <dt-byline></dt-byline>
+    <h3>Introduction</h3>
+    <p>In a 2013 speech for the Center for American Progress, former President Barack Obama described rising inequality as the &quot;defining challenge of our time.&quot; Despite his administration&rsquo;s promise to focus their efforts on addressing inequalities, the United States continues to be one of the most unequal of the developed nations, surpassed only by Chile, Mexico, and Turkey. In fact, wealth inequality appears to be rising in most developing nations, including those with a model of welfare-state capitalism, such as countries in continental Europe.</p>
 
-    <p>This is the first paragraph of the article.</p>
-    <figure class="l-middle">
+<p>Proponents of market capitalism argue that minimal government intervention results in a fair distribution of wealth, with market prices in equilibrium with supply and demand. Milton Friedman, the father of modern libertarian thought, believed that a free market could organize and distribute resources efficiently. Any remaining inequalities are the product of just disparity, where every individual owns the amount of wealth that they have earned. By this argument, the poor are trapped in poverty because of their lack of productivity rather than any structural unfairness in the system.</p>
+
+<p>On the other hand, in his landmark 2014 work Capital in the 21st Century, French economist Thomas Piketty argues that capitalism has an inherent tendency to create very high degrees of wealth and income inequality because in capitalist economies, the rate of return on capital (\(r\)) is greater than the general growth rate (\(g\)). Because of this &ldquo;\(r>g\)&rdquo; dynamic, we can expect capitalism, unchecked, to hand most economic and political power to the richest classes, and the ultra-wealthy in particular. This is true even for welfare-state capitalism. The welfare state merely provides social insurance; it has no built-in mechanism for compressing the inequalities of wealth required to dampen the power of \(r>g\).</p>
+
+<p>Despite seemingly opposite arguments on wealth inequality which are often correlated with political ideology, a 2011 study found that U.S. citizens across the political spectrum dramatically underestimate the current level of wealth inequality in the U.S., and would prefer a far more egalitarian distribution of wealth.</p>
+
+<p>Piketty and other economists have proposed a solution to growing inequalities: a modest global wealth tax. He proposes that major economies cooperate to establish a global wealth tax that prevents the rich from shifting assets into other countries to avoid paying taxes in their own country. Even if there is a lack of global cooperation, Piketty suggests that large economies like the U.S. and European Union should create their own wealth and inheritance taxes to provide a temporary resolve from the dangers of the growing wealth gap.</p>
+<h3>Modeling Wealth Distributions: Related Work</h3>
+<p>In the past 30 years, the development of datasets from sources like the Survey of Consumer Finances allowed economists and mathematicians to quantify the degree of wealth distribution in the United States and abroad. Analysis of these surveys confirm that wealth is extremely concentrated in the U.S.: the top 1% hold one third of total wealth, the richest 5% hold more than half, and the bottom 40% hold little to no wealth at all.</p>
+
+<p>The emergence of these datasets also allows economists to develop and refine models for understanding wealth distributions. A class of these models, called Asset-Exchange Models (AEMs) involve individual agents whose wealth changes due to binary transactions with other agents. An analogy to AEMs is kinetic theory, which describes molecules whose momentum and energy change due to interactions with other molecules. AEMs were first introduced in 1986 and provide idealized but useful methods to understanding wealth distributions. A recent paper by Jie Li, Bruce M.Boghosian, and Chengli Li demonstrates that, with appropriate features included, AEMs are capable of accurately modeling and explaining empirical economic data.</p>
+
+<p>In this paper, we create an interactive version of the Extended Yard-Sale Model (EYSM), a variant of the Asset-Exchange Model first proposed in 2002 and refined in 2016 to include the idea of Wealth-Attained Average (WAA), which accounts for the privileges of the wealthy, like higher investment returns and lower interest rates. While many academic works have produced models that can replicate real-world data with remarkable accuracy, most of these models remain locked in an ivory tower, inaccessible and incomprehensible by a general audience. We aim to visualize an existing model in a way that is welcoming to the average user, allowing them to understand the factors that influence wealth distribution and see for themselves the effect of different policies on the wealth gap.</p>
+<h3>Our Interactive Model</h3>
+<p>In our interactive adaptation of the Extended Yard-Sale Model, we first present a free market closed economy without a wealth tax. To understand a single transaction between agents, consider two agents, Agent A and Agent B.</p>
+
+<p>Agent A has some positive amount of wealth w and is transacting with Agent B, who has some positive amount of wealth \(x\). During this transaction, Agent A’s wealth is increased by \(\Delta w\), while Agent B’s wealth is decreased by \(\Delta w\), which can be positive or negative depending on \(\eta\) (representing a coin flip). 
+
+$$ \Delta w = \gamma \cdot min(w, x)\eta $$</p>
+
+<p>We model the Wealth-Attained Average, which simulates privilege, by biasing the coin flip. The bias is proportional to the difference between the two agents’ wealth normalized by the average wealth and multiplied by a WAA coefficient of the bias (\(\zeta)\), given by the expectation value of \(\eta\): 
+
+$$E[\eta ] = \zeta \cdot \frac{w-x}{\frac{W}{N}}$$ where \(W\) is the total wealth \(w+x\), \(n\) = number of agents (2)</p>
+
+<p>If the poorer agent is transferring to the wealthier agent, \(\Delta w\) is multiplied by a fairness coefficient of \(0 \leq \epsilon \leq 0.1\), representing charity and other social welfare programs that benefit the poor.</p>
+
+<p>In the simulation of a binary agent transaction below, modify the initial wealth of the agents, the fairness coefficient, and the fraction of the wealth transacted. Then continue to click the “Transaction” button, modifying the parameters when desired, to see how the wealth of the agents change over time.</p> 
+
+
+<figure class="l-middle">
         <div id="transaction-simulator" style="width: 100%"></div>
         <figcaption>
             <center>Transaction Simulator</center>
         </figcaption>
     </figure>
-    <p>This is the second paragraph of the article.</p>
+    <p>Now we extend this model of transaction between two agents to \(n\) = 1000 agents and run 100,000 iterations of transactions. Modify the parameters below to see how the wealth distribution of the system of agents changes over time.</p> 
     <figure class="l-middle">
         <div id="economy-simulator" style="width: 100%"></div>
         <figcaption>
             <center>Economy Simulator</center>
         </figcaption>
     </figure>
-    <p>This is the third paragraph of the article.</p>
-    <figure class="l-middle">
+    <p>Next, we make a simple change: implementing a wealth tax. For every transaction, a wealth tax given by 
+
+        $$ \chi (\bar w-w)$$ where \(0 \leq \chi \leq 1\) is added to the transacted amount \(\Delta w\).</p> 
+        
+        <p>Now we again extend this model of transaction between two agents to \(n\) = 1000 agents and run 100,000 iterations of transactions. Modify the parameters below to see how the wealth distribution of the system of agents changes over time.</p> 
+            <figure class="l-middle">
         <div id="wealth-tax-economy-simulator" style="width: 100%"></div>
         <figcaption>
             <center>Economy Simulator</center>
