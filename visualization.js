@@ -164,14 +164,17 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+
 function draw_wealth_tax_economy_simulator(container_name, wealthTaxEnabled) {
     var fairness = 0.05
     var fracTransacted = 0.2
-
+    var speed_delay = 100;
     var wealthTax = wealthTaxEnabled ? 0.1 : 0.0
 
+    const ax_label_size = 20;
+
     const container = d3.select(container_name)
-    const margin = {left: 30, right: 0, top: 10, bottom: wealthTaxEnabled ? 75 : 50 }
+    const margin = {left: 30, right: 0, top: 10, bottom: 75}
     const width = container.node().getBoundingClientRect()['width'] - margin.left - margin.right
     const height = 0.75 * width
     let abort = true;
@@ -180,15 +183,47 @@ function draw_wealth_tax_economy_simulator(container_name, wealthTaxEnabled) {
         .style("height", height + margin.top + margin.bottom)
 
     // draw axes (initial)
-    var x = d3.scaleLinear().domain([0, 100]).range([margin.left, width - margin.right])
-    var y = d3.scaleLinear().domain([0, 8]).range([height - margin.bottom, margin.top])
-    svg.append('g').attr('transform', `translate(0,${height - margin.bottom})`).attr('class', 'x-axis')
-    svg.append('g').attr('transform', `translate(${margin.left},0)`).attr('class', 'y-axis')
+    var x = d3.scaleLinear().domain([0, 100]).range([margin.left + ax_label_size, width - margin.right])
+    var y = d3.scaleLinear().domain([0, 8]).range([height - margin.bottom - ax_label_size, margin.top])
+    svg.append('g').attr('transform', `translate(0,${height - margin.bottom - ax_label_size})`).attr('class', 'x-axis')
+    svg.append('g').attr('transform', `translate(${margin.left + ax_label_size},0)`).attr('class', 'y-axis')
+
+    svg.append('text')
+        .text('Wealth of Individual ($)')
+        .attr('x', (margin.left + ax_label_size + width - margin.right) / 2)
+        .attr('y', height - margin.bottom + ax_label_size)
+        .attr('font-family', 'Helvetica').attr('font-size', 20).style('pointer-events', 'none')
+        .style("text-anchor", "middle")
+
+
+    svg.append('text')
+        .attr("text-anchor", "middle")
+        .attr("y", 3)
+        .attr('x', -(height - margin.bottom - ax_label_size + margin.top) / 2)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .attr('font-family', 'Helvetica').attr('font-size', 20).style('pointer-events', 'none')
+        .text('# of Individuals (Count)')
+
+    svg.append('image')
+        .attr('href', 'https://i.ibb.co/zHQv7vS/cividis.png')
+        .attr('x', width - margin.left - margin.right - 290)
+        .attr('y', 50)
+        .attr('width', 150)
+
+    svg.append('text')
+        .text('Total Wealth in Bar ($)')
+        .attr('x', width - margin.left - margin.right - 290 + 75)
+        .attr('y', 100)
+        .attr('font-family', 'Helvetica').attr('font-size', 20).style('pointer-events', 'none')
+        .style("text-anchor", "middle")
+
 
     let iteration = 0;
     const iter_label = svg.append('text').attr('x', width - 300).attr('y', 15).attr('class', 'iter')
 
     function plot_histogram(tax_data, duration = 1000) {
+        duration = speed_delay;
         bins = d3.bin().thresholds([0, 13, 26, 40, 53, 66, 80, 93, 106, 120, 133, 146, 160, 173, 186, 200, 213, 226, 240, 253, 266, 280, 293, 306, 320, 333, 346, 360, 373, 386, 400])(tax_data)
 
         // Change Scale
@@ -208,20 +243,35 @@ function draw_wealth_tax_economy_simulator(container_name, wealthTaxEnabled) {
             .duration(duration)
             .call(d3.axisLeft(y).ticks(height / 40))
 
+        // console.log(d3.schemeGnBu)
+        var colors = d3.scaleSequential(d3.interpolateCividis).domain([0, d3.max(bins, d => d.length * (d.x0 + d.x1))])
 
         svg
             .selectAll('rect.bar')
             .data(bins)
-            .join('rect')
-            .transition()
-            .duration(duration)
-            .attr('class', 'bar')
-            .attr("x", d => x(d.x0))
-            .attr("width", d => Math.max(0, x(d.x1) - x(d.x0)))
-            .attr("y", d => y(d.length))
-            .attr("height", d => y(0) - y(d.length))
-            .attr('fill', 'black')
-
+            .join(
+                (enter) =>
+                    enter.append("rect").attr('class', 'bar')
+                        .attr("x", d => x(d.x0))
+                        .attr("width", d => Math.max(0, x(d.x1) - x(d.x0)))
+                        .attr('y', y(0))
+                        .attr('height', 0)
+                        .call(enter => enter.transition(duration)
+                            .attr("height", d => y(0) - y(d.length))
+                            .attr("y", d => y(d.length)))
+                        .attr('fill', d => colors(d.length * (d.x0 + d.x1)))
+                ,
+                (update) => update.attr("x", d => x(d.x0))
+                    .attr('class', 'bar')
+                    .attr("width", d => Math.max(0, x(d.x1) - x(d.x0)))
+                    .call(update => update.transition(duration)
+                        .attr('fill', d => colors(d.length * (d.x0 + d.x1)))
+                        .attr("height", d => y(0) - y(d.length))
+                        .attr("y", d => y(d.length)))
+                ,
+                (exit) => exit.call(exit => exit.transition(duration).attr("height", d => 0)
+                    .attr("y", d => y(0)))
+            );
     }
 
     async function simulate_tax_economy(num_iter, speed = 0) {
@@ -272,7 +322,7 @@ function draw_wealth_tax_economy_simulator(container_name, wealthTaxEnabled) {
         const text_element = svg.select('#Play-label')
         const width_diff = BrowserText.getWidth('Pause', 20, 'Helvetica') - BrowserText.getWidth('Play', 20, 'Helvetica')
         if (text_element.text() === 'Play') {
-            simulate_tax_economy(100000, 100);
+            simulate_tax_economy(1e12, speed_delay);
             text_element.text('Pause').attr('x', 20.546875 - width_diff / 2)
         } else {
             abort = true;
@@ -288,7 +338,7 @@ function draw_wealth_tax_economy_simulator(container_name, wealthTaxEnabled) {
     })
 
     if (wealthTaxEnabled) {
-        add_slider(200, height - margin.bottom + 85, 200, 40, svg, 'Wealth Tax:', 0, 0.2).on('onchange', (val) => {
+        add_slider(450, height - margin.bottom + 85, 200, 40, svg, 'Wealth Tax:', 0, 0.2).on('onchange', (val) => {
             wealthTax = val
         })
     }
@@ -299,6 +349,10 @@ function draw_wealth_tax_economy_simulator(container_name, wealthTaxEnabled) {
 
     add_slider(200, height - margin.bottom + 25, 200, 40, svg, 'Fairness:', 0, 0.1).on('onchange', (val) => {
         fairness = val
+    })
+
+    add_slider(200, height - margin.bottom + 85, 200, 40, svg, 'Speed:', 0, 100, 75).on('onchange', (val) => {
+        speed_delay = 400 - 4 * val;
     })
 }
 
@@ -327,13 +381,13 @@ draw_wealth_tax_economy_simulator('#economy-simulator', false)
 draw_wealth_tax_economy_simulator('#wealth-tax-economy-simulator', true)
 
 
-function add_slider(loc_x, loc_y, loc_width, loc_height, svg_to_add, text, min, max) {
+function add_slider(loc_x, loc_y, loc_width, loc_height, svg_to_add, text, min, max, default_val = 0.25) {
     const text_width = BrowserText.getWidth(text, 20, 'Helvetica')
     svg_to_add.append('text').attr('y', loc_y + loc_height / 2 + 5)
         .attr('x', loc_x).attr('fill', 'black')
         .text(text).attr('font-family', 'Helvetica').attr('font-size', 20).style('pointer-events', 'none')
 
-    const myslider = d3.sliderBottom().min(min).max(max).ticks(2).default(0.25).displayValue(false).width(loc_width - text_width)
+    const myslider = d3.sliderBottom().min(min).max(max).ticks(2).default(default_val).displayValue(false).width(loc_width - text_width)
     svg_to_add.append('g').attr('id', `${text}sliderhousing`)
         .attr('transform', `translate(${loc_x + text_width + 20}, ${loc_y + 20})`)
         .call(myslider)
@@ -358,12 +412,3 @@ function add_button(loc_x, loc_y, loc_width, loc_height, svg_to_add, text) {
 
     return my_button
 }
-
-document.addEventListener('mousedown', function (event) {
-    if (event.detail > 1) {
-        event.preventDefault();
-        // of course, you still do not know what you prevent here...
-        // You could also check event.ctrlKey/event.shiftKey/event.altKey
-        // to not prevent something useful.
-    }
-}, false);
