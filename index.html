@@ -120,6 +120,35 @@
         audience. We aim to visualize an existing model in a way that is welcoming to the average user, allowing them to
         understand the factors that influence wealth distribution and see for themselves the effect of different
         policies on the wealth gap.</p>
+
+    <h3>Methods</h3>
+    <p>We used the Plotly Express library in Python to generate the interactive graphs above. The interactive simulations below were
+        created using D3.js.
+        The code snippet below shows the basic function that calculates individual transactions for all the simulations we present.</p>
+
+    <dt-code block language="javascript">
+        function transaction(event) {
+            const wealthA = individuals[0].size;
+            const wealthB = individuals[1].size;
+            const a_pays = Math.random() < 0.5;
+            let payment_amount = Math.min(wealthA, wealthB) * fracTransacted;
+            if ((wealthA < wealthB) === a_pays)
+                payment_amount *= (1 - fairness);
+            draw_transfer(Math.round(payment_amount * (a_pays ? 1 : -1)))
+        }
+    </dt-code>
+    <p>As you can see, the premise behind the wealth inequality model is encompassed in a relatively simple function.</p>
+    <p>We took an experimental approach to this paper, writing it in a format that would be accessible to academics, policymakers,
+    and the general public. Using the interactive article format of Distill.pub, which is normally used for machine learning
+    research, we embedded interactive visualizations into the paper that simulate the mathematical models used to predict
+    wealth distribution outcomes. This retains a more academic format for economists and researchers, while allowing policymakers
+    and general users to interact with and understand the model even without a mathematical or economic background. Our guiding
+    values in the work were transparency and accessibility, which we retain by catering to a diverse range of audiences and
+    reducing jargon as much as possible. Our hope is that this interactive paper format will help a broad table of stakeholders make better informed
+    policy decisions when deciding how to reduce economic inequalities in society.</p>
+
+
+
     <h3>Our Interactive Model</h3>
     <p>In our interactive adaptation of the Extended Yard-Sale Model, we first present a free market closed economy
         without a wealth tax. To understand a single transaction between agents, consider two agents, Agent A and Agent
@@ -144,7 +173,8 @@
 
     <p>In the simulation of a binary agent transaction below, modify the initial wealth of the agents, the fairness
         coefficient, and the fraction of the wealth transacted. Then continue to click the “Transaction” button,
-        modifying the parameters when desired, to see how the wealth of the agents change over time.</p>
+        modifying the parameters when desired, to see how the wealth of the agents change over time. we suggest clicking the "Transaction"
+        button at least 10-20 times to gain a clear picture of how transactions between agents work.</p>
 
 
     <figure class="l-middle">
@@ -153,9 +183,10 @@
             <center>Transaction Simulator</center>
         </figcaption>
     </figure>
-    <p>Now we extend this model of transaction between two agents to \(n\) = 1000 agents and run 100,000 iterations of
+    <p>Now we extend this model of transaction between two agents to \(n\) = 1000 agents and run infinite iterations of
         transactions. Modify the parameters below to see how the wealth distribution of the system of agents changes
-        over time.</p>
+        over time. Feel free to change the sliders as the simulation runs. Adjust the speed to slow down or increase the speed of the simulation.
+        The color of each bar represents the total wealth of the agents within the bin. This is encoded by the total wealth multiplied by the number of agents. </p>
 
     <figure class="l-middle">
         <div id="economy-simulator" style="width: 100%"></div>
@@ -167,7 +198,7 @@
 
         $$ \chi (\bar w-w)$$ where \(0 \leq \chi \leq 1\) is added to the transacted amount \(\Delta w\).</p>
 
-    <p>Now we again extend this model of transaction between two agents to \(n\) = 1000 agents and run 100,000
+    <p>Now we again extend this model of transaction between two agents to \(n\) = 1000 agents and run infinite
         iterations of transactions. Modify the parameters below to see how the wealth distribution of the system of
         agents changes over time.</p>
 
@@ -177,7 +208,9 @@
             <center>Economy Simulator</center>
         </figcaption>
     </figure>
-
+    <p>Compared to the simulation without a wealth tax, you should observe a clear shift in the distribution with a wealth tax.
+        There are no small brackets of the population with highly concentrated wealth, and overall, there are fewer agents in extreme poverty (wealth of about 0-10).
+    </p>
     <h3>Discussion</h3>
     <p>
     We note several simplifications in our model that do not accurately represent the real world. First, we do not account for negative wealth in the
