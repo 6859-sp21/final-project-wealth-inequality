@@ -1,6 +1,6 @@
 <!doctype html>
 
-<head>
+<head xmlns="http://www.w3.org/1999/html">
     <meta charset="utf-8">
     <script src="https://d3js.org/d3.v6.js"></script>
     <script src="https://unpkg.com/d3-simple-slider"></script>
@@ -180,22 +180,54 @@
 
     <h3>Discussion</h3>
     <p>
-    <ul> Simplifications</ul>
-    <ul>No negative wealth</ul>
-    <ul>Simplified form of wealth tax</ul>
-    <ul>Visual Design</ul>
-    <ul>Implications</ul>
-    <ul>Findings from paper of accuracy of their model (slightly more complex than ours)</ul>
-    <ul>Balance between two extremes</ul>
-    <ul>Wealth redistribution policy is a promising solution</ul>
-    <ul>Evidence from countries with wealth redistribution policies</ul>
-    <ul>Let’s decrease the stigma around poverty</ul>
+    We note several simplifications in our model that do not accurately represent the real world. First, we do not account for negative wealth in the
+    version of the Yard Sale Model that we implement, so there is no representation of debt or loans given. Second, we present a highly simplified
+    form of the wealth tax. In reality, the wealth tax would only apply to the top 1% wealth-holders in the population and would be implemented through
+    taxes on inheritance, real estate, stock assets, and income in a far more nuanced way. Third, our indicator for "fairness" is exaggerated, as charity and
+    welfare programs are voluntary and represent the willingness of people to donate their wealth, which is fairly unpredictable and difficult to represent
+    in a single coefficient. While these simplifications seem to produce a highly elementary model of our true wealth dynamics, a paper that studies the
+    Yard Sale Model, which is what our simulation is based on, finds that the model is in agreement with empirical data of an average error less than
+    0.16% over this time period.
     </p>
+    <p>
+    Our visual design in this paper and embedded visualizations aims to communicate a clean, polished, and simple layout. We intentionally reduce the usage
+    of colors to a simple black-and-white palette to reduce complexity for the viewer and presenting them with exactly the number of parameters that exist in the model.
+    This emphasizes that the seemingly difficult mathematical equations presented in academic papers, which we include in the body of our text,
+    can actually be understood through simple concepts. One guiding value in our work was transparency. The design of our visualization makes sure to include
+    every single parameter we mention in the paper as a clearly marked slider that the user can control. We make sure to include every variable in the equations
+    as a dynamic factor because we want to make it clear that there are no "hidden" features influencing the results behind the scenes: the user is fully able
+    to change the model as they please. This makes the ultimate implications of the simulation as plausible and persuasive as possible.
+    </p>
+    <p>
+    The implications of our work suggest that a wealth tax or other wealth redistribution policy is crucial to preventing the exacerbation of already high
+    socioeconomic inequalities. In every situation run in the simulation without a wealth tax--even with a low fraction transacted and a high level of "fairness"--
+    the wealth distribution inevitably concentrates wealth in the top 5% bracket of the agents. The moment a wealth tax is implemented, the distribution shifts. It does
+    not remove the existence of economic class, but ensures that no tiny segment of the population holds more than 50% of the total wealth. Thus, even in our simple model,
+    the wealth tax is a clear policy solution that makes far more impact than increasing social welfare and charity programs represented by the fairness coefficient.
+    </p>
+    <p>
+    Corroborating our findings, countries with strong state welfare programs, like the Nordic models of democratic-socialism, are still experiencing
+    increasing inequalities and unsustainable wealth gaps. Without clear wealth redistribution policies, even welfare states (with high degrees of the
+    fairness coefficient) succumb to a highly unequal wealth distribution. To combat this, we should further research wealth tax models, learning
+    from the mistakes of European wealth taxes that were abolished in the last few decades. We must also realize that the system is inherently unfair:
+    just like the agent in our transaction model is trapped in poverty if he starts with a low wealth, most of the world's poor have no escape.
+    We should decrease the stigma around poverty and work to balance the extremes of the free market and state-run programs.
+    </p>
+
     <h3>Future Work</h3>
     <p>
-    <ul>Visualizing other models</ul>
-    <ul>Other solutions</ul>
-    <ul>Policy workshops</ul>
+    In the future, this concept of interactive article simulations can be extended to more complex models, such as the Affine Wealth Model (AWM). This model
+    expands on the Yard Sale Model by adding parameters that model negative wealth, a key factor missing from many wealth inequality simulators.
+    In addition, models can incorporate policy solutions other than a uniform wealth tax, such as progressive income tax, the removal of inheritance
+    tax loopholes, and bracketed wealth taxes. By giving users the ability to explore almost all policy solutions that currently exist, we allow
+    the user themself to decide what is the most rational choice for their policy problem. The concept of this interactive paper could also be used
+    in policy workshops, where experts in the field can use modular tools like the transaction simulator to understand the more complex equations
+    presented in academic papers. A final vision for this work is similar to the EN-ROADS Climate Change Solutions Simulator, which is
+    a transparent, freely-available policy simulation model that gives users the chance to design their own scenarios to limit future global warming.
+    Like EN-ROADS, a wealth inequality simulator would allow the audience to try their own experiments and assumptions, and get immediate feedback
+    on the likely impacts on wealth distribution. A key strength is that it would be able to run on an ordinary laptop with an internet connection
+    in a fraction of a second, allowing it to be used real-time at in-person and virtual education events. Ultimately, this interactive simulator is
+    a step towards making complicated and pressing economic problems more accessible to the public, improving our response to global inequalities.
     </p>
 
 
