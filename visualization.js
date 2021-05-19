@@ -86,7 +86,7 @@ function draw_transaction_simulator() {
 
     var fairness = 0.95;
 
-    var fairnessSlider = d3.sliderBottom().min(0.0).max(0.3).ticks(5).default(fairness).displayValue(false).width(200)
+    var fairnessSlider = d3.sliderBottom().min(0.0).max(0.1).ticks(5).default(fairness).displayValue(false).width(200)
         .on('onchange', (val) => {
             fairness = val
         })
