@@ -40,10 +40,19 @@
     <h2>An interactive simulation-based approach to policies for wealth inequality.</h2>
     <dt-byline></dt-byline>
 
-    <dt-contents></dt-contents>
-    <h3>Abstract</h3>
+    <h3>Table of Contents</h3>
+    <figure class='l-middle'>
+        <a href="#abstract">Abstract</a><br>
+        <a href="#intro">Introduction</a><br>
+        <a href="#methods">Methods</a><br>
+        <a href="#model">Our Interactive Model</a><br>
+        <a href="#discussion">Discussion</a><br>
+        <a href="#future">Future Work</a><br>
+        <a href="#references">References</a>
+    </figure>
+    <h3 id="abstract">Abstract</h3>
     <p>In this work, we present an innovative interactive article format with embedded wealth inequality simulations. We aim to make economic and mathematical models of wealth distributions more accessible to an average user, allowing policymakers and the public to understand how changing various parameters and policies can shift wealth inequality. Our simulation is based on the Yard Sale Model, which is in agreement with empirical data of an average error less than 0.16%. In every situation run in the simulation without a wealth tax—even with a low fraction transacted and a high level of “fairness”—the wealth distribution inevitably concentrates wealth in the top 5% bracket of the agents. The moment a wealth tax is implemented, the distribution shifts. It does not remove the existence of economic class differences, but ensures that no small segment of the population holds more than 50% of the total wealth. The implications of our work suggest that a wealth tax or other wealth redistribution policies are crucial to preventing the exacerbation of already high socioeconomic inequalities. </p>
-    <h3>Introduction</h3>
+    <h3 id="intro">Introduction</h3>
     <p>In a 2013 speech for the Center for American Progress, former President Barack Obama described rising inequality
         as the &quot;defining challenge of our time.&quot;<dt-cite key="newell_obama_2013"></dt-cite> Despite his administration&rsquo;s promise to focus their
         efforts on addressing inequalities, the United States continues to be one of the most unequal of the developed
@@ -116,7 +125,7 @@
         understand the factors that influence wealth distribution and see for themselves the effect of different
         policies on the wealth gap.</p>
 
-    <h3>Methods</h3>
+    <h3 id='methods'>Methods</h3>
     <p>We used the Plotly Express<dt-cite key="noauthor_plotly_nodate"></dt-cite> library in Python to generate the interactive graphs above. The interactive simulations below were
         created using D3.js.<dt-cite key = "bostock_d3js_nodate"></dt-cite>
         The code snippet below shows the basic function that calculates individual transactions for all the simulations we present.</p>
@@ -144,7 +153,7 @@
 
 
 
-    <h3>Our Interactive Model</h3>
+    <h3 id='model'>Our Interactive Model</h3>
     <p>In our interactive adaptation of the Extended Yard-Sale Model,<dt-cite key = "boghosian_describing_2016"></dt-cite> we first present a free market closed economy
         without a wealth tax. To understand a single transaction between agents, consider two agents, Agent A and Agent
         B.</p>
@@ -206,7 +215,7 @@
     <p>Compared to the simulation without a wealth tax, you should observe a clear shift in the distribution with a wealth tax.
         There are no small brackets of the population with highly concentrated wealth, and overall, there are fewer agents in extreme poverty (wealth of about 0-10).
     </p>
-    <h3>Discussion</h3>
+    <h3 id='discussion'>Discussion</h3>
     <p>
     We note several simplifications in our model that do not accurately represent the real world. First, we do not account for negative wealth in the
     version of the Yard Sale Model<dt-cite key="boghosian_describing_2016"></dt-cite> that we implement, so there is no representation of debt or loans given. Second, we present a highly simplified
@@ -242,7 +251,7 @@
     We should decrease the stigma around poverty and work to balance the extremes of the free market and state-run programs.
     </p>
 
-    <h3>Future Work</h3>
+    <h3 id='future'>Future Work</h3>
     <p>
     In the future, this concept of interactive article simulations can be extended to more complex models, such as the Affine Wealth Model (AWM). This model
     expands on the Yard Sale Model by adding parameters that model negative wealth, a key factor missing from many wealth inequality simulators.<dt-cite key = "li_affine_2019"></dt-cite>

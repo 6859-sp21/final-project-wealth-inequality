@@ -6082,7 +6082,7 @@ var appendix = function(dom, data) {
 
     // If we have any citations on the page, render a container for the bibliography.
     if (dom.querySelector("dt-cite")) {
-      newHTML = newHTML + "<h3>References</h3><dt-bibliography></dt-bibliography>";
+      newHTML = newHTML + "<h3 id='references'>References</h3><dt-bibliography></dt-bibliography>";
     }
 
     var div = el.querySelector("div.l-body");
