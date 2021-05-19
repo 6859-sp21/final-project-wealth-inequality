@@ -44,44 +44,48 @@
 
     <h3>Introduction</h3>
     <p>In a 2013 speech for the Center for American Progress, former President Barack Obama described rising inequality
-        as the &quot;defining challenge of our time.&quot; Despite his administration&rsquo;s promise to focus their
+        as the &quot;defining challenge of our time.&quot;<dt-cite key="newell_obama_2013"></dt-cite> Despite his administration&rsquo;s promise to focus their
         efforts on addressing inequalities, the United States continues to be one of the most unequal of the developed
-        nations, surpassed only by Chile, Mexico, and Turkey. In fact, wealth inequality appears to be rising in most
+        nations, surpassed only by Chile, Mexico, and Turkey.<dt-cite key="roser_income_2013"></dt-cite> In fact, wealth inequality appears to be rising in most
         developing nations, including those with a model of welfare-state capitalism, such as countries in continental and
-        Nordic Europe.</p>
+        Nordic Europe.<dt-cite key="bird_why_nodate"></dt-cite></p>
 
     <figure class="l-page-outset">
         <iframe width="100%" height="600px;" frameborder="0" scrolling="no" src="https://plotly.com/~sauhaarda/15.embed"></iframe>
         <figcaption>
-            <center>US income shares by quintile</center>
+            <center>US income shares by quintile. Data Source: World Bank Indicators, 2018.<dt-cite key="noauthor_povcalnet_nodate"></dt-cite></center>
         </figcaption>
     </figure>
 
     <p>Proponents of market capitalism argue that minimal government intervention results in a fair distribution of
         wealth, with market prices in equilibrium with supply and demand. Milton Friedman, the father of modern
-        libertarian thought, believed that a free market could organize and distribute resources efficiently. Any
+        libertarian thought, believed that a free market could organize and distribute resources efficiently.<dt-cite key="friedman_friedman_nodate"></dt-cite> Any
         remaining inequalities are the product of just disparity, where every individual owns the amount of wealth that
         they have earned. By this argument, the poor are trapped in poverty because of their lack of productivity rather
         than any structural unfairness in the system.</p>
 
     <p>On the other hand, in his landmark 2014 work Capital in the 21st Century, French economist Thomas Piketty argues
         that capitalism has an inherent tendency to create very high degrees of wealth and income inequality because in
-        capitalist economies, the rate of return on capital (\(r\)) is greater than the general growth rate (\(g\)).
+        capitalist economies, the rate of return on capital (\(r\)) is greater than the general growth rate (\(g\)).<dt-cite key="milanovic_return_2014"></dt-cite>
         Because of this &ldquo;\(r>g\)&rdquo; dynamic, we can expect capitalism, unchecked, to hand most economic and
         political power to the richest classes, and the ultra-wealthy in particular. This is true even for welfare-state
         capitalism. The welfare state merely provides social insurance; it has no built-in mechanism for compressing the
-        inequalities of wealth required to dampen the power of \(r>g\).</p>
+        inequalities of wealth required to dampen the power of \(r>g\).<dt-cite key = "yglesias_short_2014"></dt-cite></p>
 
     <figure class="l-page-outset">
         <iframe width="100%" height="600px;" frameborder="0" scrolling="no" src="https://plotly.com/~sauhaarda/13.embed"></iframe>
         <figcaption>
-            <center>Timeseries of income inequality by country</center>
+            <center>Timeseries of income inequality by country. The Gini Index is a summary measure of income inequality. 
+                The Gini coefficient<dt-cite key="bureau_gini_nodate"></dt-cite> incorporates the detailed shares data into a single statistic, which summarizes the 
+                dispersion of income across the entire income distribution. The Gini coefficient ranges from 0, indicating 
+                perfect equality (where everyone receives an equal share), to 1, perfect inequality (where only one 
+                recipient or group of recipients receives all the income). Data Source: World Bank Indicators, 2018.<dt-cite key = "noauthor_povcalnet_nodate"></dt-cite></center>
         </figcaption>
     </figure>
 
     <p>Despite seemingly opposite arguments on wealth inequality which are often correlated with political ideology, a
         2011 study found that U.S. citizens across the political spectrum dramatically underestimate the current level
-        of wealth inequality in the U.S., and would prefer a far more egalitarian distribution of wealth.</p>
+        of wealth inequality in the U.S., and would prefer a far more egalitarian distribution of wealth.<dt-cite key="cagetti_wealth_nodate"></dt-cite></p>
 
     <p>Piketty and other economists have proposed a solution to growing inequalities: a modest global wealth tax. He
         proposes that major economies cooperate to establish a global wealth tax that prevents the rich from shifting
@@ -92,28 +96,28 @@
     <p>In the past 30 years, the development of datasets from sources like the Survey of Consumer Finances allowed
         economists and mathematicians to quantify the degree of wealth distribution in the United States and abroad.
         Analysis of these surveys confirm that wealth is extremely concentrated in the U.S.: the top 1% hold one third
-        of total wealth, the richest 5% hold more than half, and the bottom 40% hold little to no wealth at all.</p>
+        of total wealth, the richest 5% hold more than half, and the bottom 40% hold little to no wealth at all.<dt-cite key="cagetti_wealth_nodate"></dt-cite></p>
 
     <p>The emergence of these datasets also allows economists to develop and refine models for understanding wealth
         distributions. A class of these models, called Asset-Exchange Models (AEMs) involve individual agents whose
-        wealth changes due to binary transactions with other agents. An analogy to AEMs is kinetic theory, which
+        wealth changes due to binary transactions with other agents.<dt-cite key = "boghosian_growth_2016"></dt-cite> An analogy to AEMs is kinetic theory, which
         describes molecules whose momentum and energy change due to interactions with other molecules. AEMs were first
         introduced in 1986 and provide idealized but useful methods to understanding wealth distributions. A recent
         paper by Jie Li, Bruce M.Boghosian, and Chengli Li demonstrates that, with appropriate features included, AEMs
-        are capable of accurately modeling and explaining empirical economic data.</p>
+        are capable of accurately modeling and explaining empirical economic data.<dt-cite key="li_affine_2019"></dt-cite></p>
 
     <p>In this paper, we create an interactive version of the Extended Yard-Sale Model (EYSM), a variant of the
         Asset-Exchange Model first proposed in 2002 and refined in 2016 to include the idea of Wealth-Attained Average
         (WAA), which accounts for the privileges of the wealthy, like higher investment returns and lower interest
-        rates. While many academic works have produced models that can replicate real-world data with remarkable
+        rates.<dt-cite key = "boghosian_describing_2016"></dt-cite> While many academic works have produced models that can replicate real-world data with remarkable
         accuracy, most of these models remain locked in an ivory tower, inaccessible and incomprehensible by a general
         audience. We aim to visualize an existing model in a way that is welcoming to the average user, allowing them to
         understand the factors that influence wealth distribution and see for themselves the effect of different
         policies on the wealth gap.</p>
 
     <h3>Methods</h3>
-    <p>We used the Plotly Express library in Python to generate the interactive graphs above. The interactive simulations below were
-        created using D3.js.
+    <p>We used the Plotly Express<dt-cite key="noauthor_plotly_nodate"></dt-cite> library in Python to generate the interactive graphs above. The interactive simulations below were
+        created using D3.js.<dt-cite key = "bostock_d3js_nodate"></dt-cite>
         The code snippet below shows the basic function that calculates individual transactions for all the simulations we present.</p>
 
     <dt-code block language="javascript">
@@ -129,7 +133,7 @@
     </dt-code>
     <p>As you can see, the premise behind the wealth inequality model is encompassed in a relatively simple function.</p>
     <p>We took an experimental approach to this paper, writing it in a format that would be accessible to academics, policymakers,
-    and the general public. Using the interactive article format of Distill.pub, which is normally used for machine learning
+    and the general public. Using the interactive article format of Distill.pub<dt-cite key = "noauthor_distill_nodate"></dt-cite>, which is normally used for machine learning
     research, we embedded interactive visualizations into the paper that simulate the mathematical models used to predict
     wealth distribution outcomes. This retains a more academic format for economists and researchers, while allowing policymakers
     and general users to interact with and understand the model even without a mathematical or economic background. Our guiding
@@ -140,7 +144,7 @@
 
 
     <h3>Our Interactive Model</h3>
-    <p>In our interactive adaptation of the Extended Yard-Sale Model, we first present a free market closed economy
+    <p>In our interactive adaptation of the Extended Yard-Sale Model,<dt-cite key = "boghosian_describing_2016"></dt-cite> we first present a free market closed economy
         without a wealth tax. To understand a single transaction between agents, consider two agents, Agent A and Agent
         B.</p>
 
@@ -204,13 +208,13 @@
     <h3>Discussion</h3>
     <p>
     We note several simplifications in our model that do not accurately represent the real world. First, we do not account for negative wealth in the
-    version of the Yard Sale Model that we implement, so there is no representation of debt or loans given. Second, we present a highly simplified
+    version of the Yard Sale Model<dt-cite key="boghosian_describing_2016"></dt-cite> that we implement, so there is no representation of debt or loans given. Second, we present a highly simplified
     form of the wealth tax. In reality, the wealth tax would only apply to the top 1% wealth-holders in the population and would be implemented through
     taxes on inheritance, real estate, stock assets, and income in a far more nuanced way. Third, our indicator for "fairness" is exaggerated, as charity and
     welfare programs are voluntary and represent the willingness of people to donate their wealth, which is fairly unpredictable and difficult to represent
     in a single coefficient. While these simplifications seem to produce a highly elementary model of our true wealth dynamics, a paper that studies the
     Yard Sale Model, which is what our simulation is based on, finds that the model is in agreement with empirical data of an average error less than
-    0.16% over this time period.
+    0.16% over this time period.<dt-cite key = "li_affine_2019"></dt-cite>
     </p>
     <p>
     Our visual design in this paper and embedded visualizations aims to communicate a clean, polished, and simple layout. We intentionally reduce the usage
@@ -230,9 +234,9 @@
     </p>
     <p>
     Corroborating our findings, countries with strong state welfare programs, like the Nordic models of democratic-socialism, are still experiencing
-    increasing inequalities and unsustainable wealth gaps. Without clear wealth redistribution policies, even welfare states (with high degrees of the
+    increasing inequalities and unsustainable wealth gaps.<dt-cite key = "bird_why_nodate"></dt-cite> Without clear wealth redistribution policies, even welfare states (with high degrees of the
     fairness coefficient) succumb to a highly unequal wealth distribution. To combat this, we should further research wealth tax models, learning
-    from the mistakes of European wealth taxes that were abolished in the last few decades. We must also realize that the system is inherently unfair:
+    from the mistakes of European wealth taxes that were abolished in the last few decades.<dt-cite key="tankersley_warren_2021"></dt-cite> We must also realize that the system is inherently unfair:
     just like the agent in our transaction model is trapped in poverty if he starts with a low wealth, most of the world's poor have no escape.
     We should decrease the stigma around poverty and work to balance the extremes of the free market and state-run programs.
     </p>
@@ -240,12 +244,12 @@
     <h3>Future Work</h3>
     <p>
     In the future, this concept of interactive article simulations can be extended to more complex models, such as the Affine Wealth Model (AWM). This model
-    expands on the Yard Sale Model by adding parameters that model negative wealth, a key factor missing from many wealth inequality simulators.
+    expands on the Yard Sale Model by adding parameters that model negative wealth, a key factor missing from many wealth inequality simulators.<dt-cite key = "li_affine_2019"></dt-cite>
     In addition, models can incorporate policy solutions other than a uniform wealth tax, such as progressive income tax, the removal of inheritance
     tax loopholes, and bracketed wealth taxes. By giving users the ability to explore almost all policy solutions that currently exist, we allow
     the user themself to decide what is the most rational choice for their policy problem. The concept of this interactive paper could also be used
     in policy workshops, where experts in the field can use modular tools like the transaction simulator to understand the more complex equations
-    presented in academic papers. A final vision for this work is similar to the EN-ROADS Climate Change Solutions Simulator, which is
+    presented in academic papers. A final vision for this work is similar to the EN-ROADS Climate Change Solutions Simulator,<dt-cite key="noauthor_en-roads_nodate"></dt-cite> which is
     a transparent, freely-available policy simulation model that gives users the chance to design their own scenarios to limit future global warming.
     Like EN-ROADS, a wealth inequality simulator would allow the audience to try their own experiments and assumptions, and get immediate feedback
     on the likely impacts on wealth distribution. A key strength is that it would be able to run on an ordinary laptop with an internet connection
@@ -262,4 +266,223 @@
 <script src="visualization.js"></script>
 <script type="text/bibliography">
 
+    @article{li_affine_2019,
+        title = {The Affine Wealth Model: An agent-based model of asset exchange that allows for negative-wealth agents and its empirical validation},
+        volume = {516},
+        issn = {0378-4371},
+        shorttitle = {The {Affine} {Wealth} {Model}},
+        url = {https://www.sciencedirect.com/science/article/pii/S0378437118313906},
+        doi = {10.1016/j.physa.2018.10.042},
+        abstract = {We present a stochastic, agent-based, binary-transaction Asset-Exchange Model (AEM) for wealth distribution that allows for agents with negative wealth. This model retains certain features of prior AEMs such as redistribution and wealth-attained advantage, but it also allows for shifts as well as scalings of the agent density function. We derive the Fokker–Planck equation describing its time evolution and we describe its numerical solution, including a methodology for solving the inverse problem of finding the model parameters that best match empirical data. Using this methodology, we compare the steady-state solutions of the Fokker–Planck equation with data from, inter alia, the United States Survey of Consumer Finances over a time period of 27 years. In doing so, we demonstrate agreement with empirical data with an average error less than 0.16\% over this time period. We present the model parameters for the US wealth distribution data as a function of time under the assumption that the distribution responds to their variation adiabatically. We argue that the time series of model parameters thus obtained provides a valuable new diagnostic tool for analyzing wealth inequality.},
+        language = {en},
+        urldate = {2021-05-01},
+        journal = {Physica A: Statistical Mechanics and its Applications},
+        author = {Li, Jie and Boghosian, Bruce M. and Li, Chengli},
+        month = feb,
+        year = {2019},
+        keywords = {Affine Wealth Model, Asset Exchange Model, Duality, Extended Yard-Sale Model, Gini coefficient, Lorenz curve, Phase coexistence, Phase transitions, Wealth condensation, Wealth inequality, Wealth-attained advantage, Yard-Sale Model},
+        pages = {423--442},
+        file = {ScienceDirect Full Text PDF:C\:\\Users\\anush\\Zotero\\storage\\ENNKE7NY\\Li et al. - 2019 - The Affine Wealth Model An agent-based model of a.pdf:application/pdf;ScienceDirect Snapshot:C\:\\Users\\anush\\Zotero\\storage\\HC93ZFQI\\S0378437118313906.html:text/html}
+    }
+    
+    @misc{noauthor_wealth_2021,
+        author = {},
+        title = {Wealth inequality in the United States},
+        copyright = {Creative Commons Attribution-ShareAlike License},
+        url = {https://en.wikipedia.org/w/index.php?title=Wealth_inequality_in_the_United_States&oldid=1017643811},
+        abstract = {Wealth inequality in the United States, also known as the wealth gap, is the unequal distribution of assets among residents of the United States. Wealth commonly includes the values of any homes, automobiles, personal valuables, businesses, savings, and investments, as well as any associated debts. The net worth of U.S. households and non-profit organizations was \$107 trillion in the third quarter of 2019, a record level both in nominal terms and purchasing power parity. As of Q3 2019, the bottom 50\% of households had \$1.67 trillion, or 1.6\% of the net worth, versus \$74.5 trillion, or 70\% for the top 10\%. From an international perspective, the difference in US median and mean wealth per adult is over 600\%.
+    
+    U.S. Federal Reserve data indicates that from 1989 to 2020, U.S. net worth became increasingly concentrated with the top 1\% (roughly 11.1 million and above) and top 10\% wealthiest (roughly 1.2 million and above), due in large part to corporate stock ownership concentration in those segments of the population; the bottom 50\% have little if any corporate stock. Just prior to  President Barack Obama's 2014 State of the Union Address, media reported that the wealthiest 1\% of Americans possess 40\% of the nation's wealth; the bottom 80\% own 7\%. The gap between the wealth of the top 10\% and that of the middle class is over 1,000\%; that increases another 1,000\% for the top 1\%. The average employee "needs to work more than a month to earn what the CEO earns in one hour."Although different from income inequality, the two are related. In Inequality for All—a 2013 documentary, narrated by Robert Reich, in which he argues that income inequality is the defining issue of the United States—Reich states that 95\% of economic gains following the economic recovery which began in 2009 went to the top 1\% of Americans (by net worth) (HNWI). More recently, in 2017, an Oxfam study found that only eight people, six of them Americans, own as much combined wealth as half the human race.A 2011 study found that US citizens across the political spectrum dramatically underestimate the current level of wealth inequality in the US, and would prefer a far more egalitarian distribution of wealth.Wealth is usually not used for daily expenditures or factored into household budgets, but combined with income, it represents a family's total opportunity to secure stature and a meaningful standard of living, or to pass their class status down to their children. Moreover, wealth provides for both short- and long-term financial security, bestows social prestige, contributes to political power, and can be leveraged to obtain more wealth. Hence, wealth provides mobility and agency—the ability to act. The accumulation of wealth enables a variety of freedoms, and removes limits on life that one might otherwise face. Dennis Gilbert asserts that the standard of living of the working and middle classes is dependent primarily upon income and wages, while the rich tend to rely on wealth, distinguishing them from the vast majority of Americans. A September 2014 study by Harvard Business School declared that the growing disparity between the very wealthy and the lower and middle classes is no longer sustainable.},
+        language = {en},
+        urldate = {2021-05-01},
+        journal = {Wikipedia},
+        month = apr,
+        year = {2021},
+        note = {Page Version ID: 1017643811},
+        author = {},
+        file = {Snapshot:C\:\\Users\\anush\\Zotero\\storage\\5E8GS64L\\index.html:text/html}
+    }
+    
+    @misc{yglesias_short_2014,
+        title = {The short guide to Capital in the 21st Century},
+        url = {https://www.vox.com/2014/4/8/5592198/the-short-guide-to-capital-in-the-21st-century},
+        abstract = {Thomas Piketty's Capital in the 21st Century is the most important economics book of the year, if not the decade. If you don't have time to read all 700 pages, we've got you covered right here.},
+        language = {en},
+        urldate = {2021-05-01},
+        journal = {Vox},
+        author = {Yglesias, Matthew},
+        month = apr,
+        year = {2014},
+        file = {Snapshot:C\:\\Users\\anush\\Zotero\\storage\\6KZXNCIG\\the-short-guide-to-capital-in-the-21st-century.html:text/html}
+    }
+    
+    @book{milanovic_return_2014,
+        series = {Policy {Research} {Working} {Papers}},
+        title = {The Return of "Patrimonial Capitalism": Review of Thomas Piketty's Capital in the 21st Century},
+        shorttitle = {The {Return} of “{Patrimonial} {Capitalism}”},
+        url = {http://elibrary.worldbank.org/doi/book/10.1596/1813-9450-6974},
+        language = {en},
+        urldate = {2021-05-01},
+        publisher = {The World Bank},
+        author = {Milanovic, Branko},
+        month = jul,
+        year = {2014},
+        doi = {10.1596/1813-9450-6974},
+        file = {Milanovic - 2014 - The Return of “Patrimonial Capitalism” Review of .pdf:C\:\\Users\\anush\\Zotero\\storage\\YKXA2RIV\\Milanovic - 2014 - The Return of “Patrimonial Capitalism” Review of .pdf:application/pdf}
+    }
+    
+    @article{newell_obama_2013,
+        chapter = {US news},
+        title = {Obama: income inequality is 'defining challenge of our time' – live},
+        issn = {0261-3077},
+        shorttitle = {Obama},
+        url = {https://www.theguardian.com/world/2013/dec/04/obama-income-inequality-minimum-wage-live},
+        abstract = {President renews call to raise minimum wage as low-wage workers plan nationwide day of action across US cities},
+        language = {en-GB},
+        urldate = {2021-05-01},
+        journal = {The Guardian},
+        author = {Newell, Jim},
+        month = dec,
+        year = {2013},
+        keywords = {Obama administration, US news, US politics, World news},
+        file = {Snapshot:C\:\\Users\\anush\\Zotero\\storage\\Q6W2QEXK\\obama-income-inequality-minimum-wage-live.html:text/html}
+    }
+    
+    @article{cagetti_wealth_nodate,
+        title = {Wealth inequality: data and models},
+        abstract = {In the United States wealth is highly concentrated and very unequally distributed: the richest 1\% hold one third of the total wealth in the economy. Understanding the determinants of wealth inequality is a challenge for many economic models. We summarize some key facts about the wealth distribution and what economic models have been able to explain so far.},
+        language = {en},
+        author = {Cagetti, Marco},
+        pages = {40},
+        file = {Cagetti - Wealth inequality data and models.pdf:C\:\\Users\\anush\\Zotero\\storage\\FAFJ6X37\\Cagetti - Wealth inequality data and models.pdf:application/pdf}
+    }
+    
+    @misc{noauthor_povcalnet_nodate,
+        title = {PovcalNet},
+        author = {},
+
+        url = {http://iresearch.worldbank.org/PovcalNet/home.aspx},
+        urldate = {2021-05-19},
+        journal = {World Bank Indicators},
+        file = {PovcalNet:C\:\\Users\\anush\\Zotero\\storage\\RZTVQQ7N\\home.html:text/html}
+    }
+    
+    @article{roser_income_2013,
+        title = {Income Inequality},
+        url = {https://ourworldindata.org/income-inequality},
+        abstract = {How are incomes distributed and how and why did the distribution change over time?},
+        urldate = {2021-05-19},
+        journal = {Our World in Data},
+        author = {Roser, Max and Ortiz-Ospina, Esteban},
+        month = dec,
+        year = {2013},
+        file = {Snapshot:C\:\\Users\\anush\\Zotero\\storage\\LSR8X7DL\\income-inequality.html:text/html}
+    }
+    
+    @misc{noauthor_plotly_nodate,
+        title = {Plotly Express},
+        author = {},
+
+        url = {https://plotly.com/python/plotly-express/},
+        abstract = {Plotly Express is a terse, consistent, high-level API for creating figures.},
+        urldate = {2021-05-19}
+    }
+    
+    @misc{bostock_d3js_nodate,
+        title = {D3.js - Data-Driven Documents},
+        url = {https://d3js.org/},
+        abstract = {D3 is a JavaScript library for visualizing data with HTML, SVG, and CSS.},
+        urldate = {2021-05-19},
+        author = {Bostock, Mike},
+        file = {Snapshot:C\:\\Users\\anush\\Zotero\\storage\\3YPT7J6Q\\d3js.org.html:text/html}
+    }
+    
+    @misc{noauthor_distill_nodate,
+        title = {Distill — Latest articles about machine learning},
+        url = {http://distill.pub/},
+        abstract = {Articles about Machine Learning},
+        language = {en},
+        urldate = {2021-05-19},
+        author = {},
+
+        journal = {Distill}
+    }
+    
+    @article{boghosian_describing_2016,
+        title = {Describing Realistic Wealth Distributions with the Extended Yard-Sale Model of Asset Exchange},
+        author = {Boghosian, Bruce and Devitt-Lee, Adrian and Li, Jie and Marcq, Jeremy and Wang, Hongyan},
+        month = apr,
+        year = {2016},
+        file = {Full Text PDF:C\:\\Users\\anush\\Zotero\\storage\\HN8JVYS3\\Boghosian et al. - 2016 - Describing Realistic Wealth Distributions with the.pdf:application/pdf}
+    }
+    
+    @misc{bird_why_nodate,
+        title = {Why Socialist Scandinavia Has Some of the Highest Inequality in Europe},
+        url = {https://www.businessinsider.com/why-socialist-scandinavia-has-some-of-the-highest-inequality-in-europe-2014-10},
+        urldate = {2021-05-19},
+        author = {Bird, Mike},
+        file = {Why Socialist Scandinavia Has Some of the Highest Inequality in Europe:C\:\\Users\\anush\\Zotero\\storage\\9B4AAJ4Q\\why-socialist-scandinavia-has-some-of-the-highest-inequality-in-europe-2014-10.html:text/html}
+    }
+    
+    @article{boghosian_growth_2016,
+        title = {The Growth of Oligarchy in a Yard-Sale Model of Asset Exchange: A Logistic Equation for Wealth Condensation},
+        shorttitle = {The {Growth} of {Oligarchy} in a {Yard}-{Sale} {Model} of {Asset} {Exchange}},
+        url = {http://arxiv.org/abs/1608.05851},
+        doi = {10.5220/0005956501870193},
+        abstract = {The addition of wealth-attained advantage (WAA) to the Yard-Sale Model (YSM) of asset exchange has been demonstrated to induce wealth condensation. In a model of WAA for which the bias is a continuous function of the wealth difference of the transacting agents, the condensation was shown to arise from a second-order phase transition to a coexistence regime. In this paper, we present the first analytic time-dependent results for this model, by showing that the condensed wealth obeys a logistic equation in time.},
+        urldate = {2021-05-19},
+        journal = {Proceedings of the 1st International Conference on Complex Information Systems},
+        author = {Boghosian, Bruce M. and Devitt-Lee, Adrian and Wang, Hongyan},
+        year = {2016},
+        note = {arXiv: 1608.05851},
+        keywords = {Physics - Physics and Society, Quantitative Finance - General Finance},
+        pages = {187--193},
+        annote = {Comment: 15 pages, 2 figures},
+        file = {arXiv Fulltext PDF:C\:\\Users\\anush\\Zotero\\storage\\ED5GI6KN\\Boghosian et al. - 2016 - The Growth of Oligarchy in a Yard-Sale Model of As.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\anush\\Zotero\\storage\\J9X8NCMZ\\1608.html:text/html}
+    }
+    
+    @article{tankersley_warren_2021,
+        chapter = {Business},
+        title = {Warren Revives Wealth Tax, Citing Pandemic Inequalities},
+        issn = {0362-4331},
+        url = {https://www.nytimes.com/2021/03/01/business/elizabeth-warren-wealth-tax.html},
+        abstract = {A tax on the net worth of America’s wealthiest individuals remains popular with voters, but has yet to be embraced by President Biden.},
+        language = {en-US},
+        urldate = {2021-05-19},
+        journal = {The New York Times},
+        author = {Tankersley, Jim},
+        month = mar,
+        year = {2021},
+        keywords = {Coronavirus (2019-nCoV), Federal Taxes (US), High Net Worth Individuals, Law and Legislation, Saez, Emmanuel, Senate, Taxation, United States Economy, United States Politics and Government, Warren, Elizabeth, Zucman, Gabriel},
+        file = {Snapshot:C\:\\Users\\anush\\Zotero\\storage\\93GPX5ZD\\elizabeth-warren-wealth-tax.html:text/html}
+    }
+    
+    @misc{noauthor_en-roads_nodate,
+        title = {En-ROADS},
+        author = {},
+
+        url = {https://www.climateinteractive.org/tools/en-roads/},
+        urldate = {2021-05-19},
+        file = {En-ROADS:C\:\\Users\\anush\\Zotero\\storage\\ZSHRIKIB\\en-roads.html:text/html}
+    }
+    
+    @misc{friedman_friedman_nodate,
+        title = {Friedman on Capitalism and Freedom},
+        url = {https://oll.libertyfund.org/page/friedman-on-capitalism-and-freedom},
+        urldate = {2021-05-19},
+        author = {Friedman, Milton},
+        file = {Friedman on Capitalism and Freedom | Online Library of Liberty:C\:\\Users\\anush\\Zotero\\storage\\T756K7NW\\friedman-on-capitalism-and-freedom.html:text/html}
+    }
+    
+    @misc{bureau_gini_nodate,
+        title = {Gini Index},
+        url = {https://www.census.gov/topics/income-poverty/income-inequality/about/metrics/gini-index.html},
+        language = {EN-US},
+        urldate = {2021-05-19},
+        journal = {The United States Census Bureau},
+        author = {Bureau, US Census},
+        note = {Section: Government},
+        file = {Snapshot:C\:\\Users\\anush\\Zotero\\storage\\CWRDHTDD\\gini-index.html:text/html}
+    }
+    
 </script>
